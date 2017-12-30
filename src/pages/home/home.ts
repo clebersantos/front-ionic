@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { UsuarioProvider } from '../../providers/usuario/usuario';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'page-home',
@@ -10,15 +11,20 @@ import { UsuarioProvider } from '../../providers/usuario/usuario';
 export class HomePage {
 
   public usuarios = [];
+  public usuarioCadastro = { "nome": "", "idade": null }
 
-  constructor(public navCtrl: NavController, private usuarioService:UsuarioProvider) {
+  constructor(public navCtrl: NavController, private usuarioService: UsuarioProvider) {
 
     this.getUsuarios();
 
   }
 
   public getUsuarios() {
-  	this.usuarioService.findAll().subscribe(response => this.usuarios = response);
+    this.usuarioService.findAll().subscribe(response => this.usuarios = response);
+  }
+
+  public salvarUsuario() {
+    this.usuarioService.salvar(this.usuarioCadastro).subscribe(Response => this.getUsuarios());
   }
 
 }

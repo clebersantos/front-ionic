@@ -16,8 +16,12 @@ export class UsuarioProvider {
     console.log('Hello UsuarioProvider Provider');
   }
 
-  public findAll():Observable<any> {
-      return this.http.get(this.urlUsuario);
+  public findAll(): Observable<any> {
+    return this.http.get(this.urlUsuario);
+  }
+
+  public salvar(usuario): Observable<any> {
+    return this.http.post(this.urlUsuario, usuario);
   }
 
 }
