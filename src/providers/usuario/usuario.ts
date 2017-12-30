@@ -12,6 +12,7 @@ import { Observable } from 'rxjs/Observable';
 export class UsuarioProvider {
 
   public urlUsuario = "http://127.0.0.1:8000/usuario";
+
   constructor(public http: HttpClient) {
     console.log('Hello UsuarioProvider Provider');
   }
@@ -22,6 +23,14 @@ export class UsuarioProvider {
 
   public salvar(usuario): Observable<any> {
     return this.http.post(this.urlUsuario, usuario);
+  }
+
+  public editar(usuario): Observable<any> {
+    return this.http.put(this.urlUsuario + "/" + usuario._id, usuario)
+  }
+
+  public deletar(id): Observable<any> {
+   return this.http.delete(this.urlUsuario + "/" + id);
   }
 
 }

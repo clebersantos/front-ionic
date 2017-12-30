@@ -11,7 +11,7 @@ import { Observable } from 'rxjs/Observable';
 export class HomePage {
 
   public usuarios = [];
-  public usuarioCadastro = { "nome": "", "idade": null }
+  public usuarioCadastro = {"_id":null,"nome": "", "idade": null }
 
   constructor(public navCtrl: NavController, private usuarioService: UsuarioProvider) {
 
@@ -24,7 +24,19 @@ export class HomePage {
   }
 
   public salvarUsuario() {
-    this.usuarioService.salvar(this.usuarioCadastro).subscribe(Response => this.getUsuarios());
+    if(this.usuarioCadastro._id == null) {
+      this.usuarioService.salvar(this.usuarioCadastro).subscribe(Response => this.getUsuarios());
+    } else {
+      this.usuarioService.editar(this.usuarioCadastro).subscribe(Response => this.getUsuarios());
+    }
+  }
+
+  public popularForm(usuario) {
+    this.usuarioCadastro = usuario;
+  }
+
+  public deletar(id) {
+    this.usuarioService.deletar(id).subscribe(Response => this.getUsuarios());
   }
 
 }
