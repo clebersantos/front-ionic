@@ -2,20 +2,27 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { UsuarioProvider } from '../../providers/usuario/usuario';
 import { Observable } from 'rxjs/Observable';
+import { PerfilProvider } from '../../providers/perfil/perfil';
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html',
-  providers: [UsuarioProvider]
+  providers: [UsuarioProvider, PerfilProvider]
 })
 export class HomePage {
 
   public usuarios = [];
-  public usuarioCadastro = {"_id":null,"nome": "", "idade": null }
+  public perfis = [];
+  public usuarioCadastro = {"_id":null,"nome": "", "idade": null, perfil:null}
 
-  constructor(public navCtrl: NavController, private usuarioService: UsuarioProvider) {
+  constructor(
+    public navCtrl: NavController,
+    private usuarioService: UsuarioProvider,
+    private perfilService: PerfilProvider
+  ) {
 
     this.getUsuarios();
+    this.getPerfis();
 
   }
 
@@ -39,4 +46,11 @@ export class HomePage {
     this.usuarioService.deletar(id).subscribe(Response => this.getUsuarios());
   }
 
+  public getPerfis() {
+    this.perfilService.findAll().subscribe(response => this.perfis = response);
+  }
+
+  public compareFn(e1: any, e2: any): boolean {
+    return e1 && e2 ? e1.id === e2.id : e1 === e2;
+  }
 }

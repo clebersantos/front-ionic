@@ -16,12 +16,18 @@
       <ion-label>Idade</ion-label>
       <ion-input type="text" [(ngModel)]="usuarioCadastro.idade" name="idade"></ion-input>
     </ion-item>
+    <ion-item>
+        <ion-label>Perfil</ion-label>
+        <ion-select [(ngModel)]="usuarioCadastro.perfil" name="perfil">
+          <ion-option *ngFor="let perfil of perfis" [value]="perfil">{{perfil.nome}}</ion-option>
+        </ion-select>
+      </ion-item>
     <button ion-button type="submit" block>Salvar</button>
   </form>
 
   <ion-list *ngFor="let usuario of usuarios">
     <ion-item>
-      {{usuario.nome}} - {{usuario.idade}} 
+      {{usuario.nome}} - {{usuario.idade}} - {{usuario.perfil.nome}}
       <button (click)="popularForm(usuario)" ion-button small>Editar</button>
       <button (click)="deletar(usuario._id)" ion-button small color="danger">Deletar</button>
     </ion-item>
